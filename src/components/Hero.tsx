@@ -6,7 +6,6 @@ export default function Hero() {
     <section className="mt-4.5 md:mt-7.5">
       <div className="site-container">
         <div className="overflow-hidden rounded-2xl bg-[#16171C]">
-
           <div
             className="
               grid
@@ -25,7 +24,6 @@ export default function Hero() {
               lg:px-10.5
             "
           >
-
             {/* =:= IMAGE =:= */}
 
             <div
@@ -74,7 +72,6 @@ export default function Hero() {
               />
             </div>
 
-
             {/* =:= TEXT CONTENT =:= */}
 
             <div
@@ -100,7 +97,6 @@ export default function Hero() {
                 lg:pr-12.5
               "
             >
-
               <p
                 className="
                   mb-4
@@ -120,7 +116,6 @@ export default function Hero() {
               >
                 WORKOUT LIBRARY
               </p>
-
 
               <h1
                 className="
@@ -146,19 +141,12 @@ export default function Hero() {
                   xl:text-[58px]
                 "
               >
-                <span className="block">
-                  TRAIN WITH INTENT.
-                </span>
+                <span className="block">TRAIN WITH INTENT.</span>
 
-                <span className="block md:hidden">
-                  LOG EVERY SET.
-                </span>
+                <span className="block md:hidden">LOG EVERY SET.</span>
 
-                <span className="hidden md:block">
-                  LOG EVERY SET.
-                </span>
+                <span className="hidden md:block">LOG EVERY SET.</span>
               </h1>
-
 
               <p
                 className="
@@ -182,11 +170,10 @@ export default function Hero() {
                   lg:text-[16px]
                 "
               >
-                FitLog is a dark, no-nonsense gym companion:
-                pick a lift, lock it into today&apos;s plan, and
-                watch the week&apos;s work add up.
+                FitLog is a dark, no-nonsense gym companion: pick a lift, lock
+                it into today&apos;s plan, and watch the week&apos;s work add
+                up.
               </p>
-
 
               {/* =:= BROWSE BUTTON =:= */}
               <div
@@ -236,7 +223,6 @@ export default function Hero() {
                   "
                 >
                   BROWSE WORKOUTS
-
                   <ArrowDown
                     size={14}
                     strokeWidth={2}
@@ -244,9 +230,7 @@ export default function Hero() {
                   />
                 </a>
               </div>
-
             </div>
-
           </div>
         </div>
       </div>

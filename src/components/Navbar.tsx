@@ -14,21 +14,17 @@ export default function Navbar() {
 
   const { plan, saved } = usePlan();
 
-  const [activeNav, setActiveNav] =
-    useState<ActiveNav>(null);
+  const [activeNav, setActiveNav] = useState<ActiveNav>(null);
 
-  const [menuOpen, setMenuOpen] =
-    useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   /* =:= ACTIVE MENU =:= */
 
   const workoutSelected =
     pathname.startsWith("/workout") ||
-    (pathname === "/" &&
-      activeNav === "workouts");
+    (pathname === "/" && activeNav === "workouts");
 
-  const planSelected =
-    pathname.startsWith("/my-plan");
+  const planSelected = pathname.startsWith("/my-plan");
 
   return (
     <header
@@ -43,7 +39,6 @@ export default function Navbar() {
       "
     >
       <div className="site-container relative">
-
         {/* =:= MAIN NAVBAR =:= */}
 
         <div
@@ -56,7 +51,6 @@ export default function Navbar() {
             lg:h-22
           "
         >
-
           {/* =:= LOGO =:= */}
 
           <Link
@@ -104,7 +98,6 @@ export default function Navbar() {
             </span>
           </Link>
 
-
           {/* =:= DESKTOP CENTER MENU =:= */}
 
           <nav
@@ -119,16 +112,11 @@ export default function Navbar() {
               lg:flex
             "
           >
-
             <Link
               href="/"
-              onClick={() =>
-                setActiveNav("workouts")
-              }
+              onClick={() => setActiveNav("workouts")}
               style={{
-                color: workoutSelected
-                  ? "#C7FF00"
-                  : "#B7B8BD",
+                color: workoutSelected ? "#C7FF00" : "#B7B8BD",
               }}
               className={`
                 rounded-full
@@ -144,23 +132,16 @@ export default function Navbar() {
 
                 hover:bg-[#1B260D]
 
-                ${
-                  workoutSelected
-                    ? "bg-[#1B260D]"
-                    : ""
-                }
+                ${workoutSelected ? "bg-[#1B260D]" : ""}
               `}
             >
               Workouts
             </Link>
 
-
             <Link
               href="/my-plan?tab=today"
               style={{
-                color: planSelected
-                  ? "#C7FF00"
-                  : "#B7B8BD",
+                color: planSelected ? "#C7FF00" : "#B7B8BD",
               }}
               className={`
                 rounded-full
@@ -176,18 +157,12 @@ export default function Navbar() {
 
                 hover:bg-[#1B260D]
 
-                ${
-                  planSelected
-                    ? "bg-[#1B260D]"
-                    : ""
-                }
+                ${planSelected ? "bg-[#1B260D]" : ""}
               `}
             >
               My Plan
             </Link>
-
           </nav>
-
 
           {/* =:= DESKTOP PLAN + SAVED =:= */}
 
@@ -200,7 +175,6 @@ export default function Navbar() {
               lg:flex
             "
           >
-
             <Link
               href="/my-plan?tab=today"
               className="
@@ -241,7 +215,6 @@ export default function Navbar() {
                 {plan.length}
               </span>
             </Link>
-
 
             <Link
               href="/my-plan?tab=saved"
@@ -286,19 +259,13 @@ export default function Navbar() {
                 {saved.length}
               </span>
             </Link>
-
           </div>
-
 
           {/* =:= TABLET + MOBILE HAMBURGER =:= */}
 
           <button
             type="button"
-            onClick={() =>
-              setMenuOpen(
-                (previous) => !previous
-              )
-            }
+            onClick={() => setMenuOpen((previous) => !previous)}
             className="
               flex
               h-10
@@ -330,9 +297,7 @@ export default function Navbar() {
               "
             />
           </button>
-
         </div>
-
 
         {/* =:= MOBILE + TABLET RIGHT DROPDOWN =:= */}
 
@@ -360,7 +325,6 @@ export default function Navbar() {
               lg:hidden
             "
           >
-
             <Link
               href="/"
               onClick={() => {
@@ -368,9 +332,7 @@ export default function Navbar() {
                 setMenuOpen(false);
               }}
               style={{
-                color: workoutSelected
-                  ? "#C7FF00"
-                  : "#B7B8BD",
+                color: workoutSelected ? "#C7FF00" : "#B7B8BD",
               }}
               className={`
                 block
@@ -388,26 +350,17 @@ export default function Navbar() {
 
                 hover:bg-[#1B260D]
 
-                ${
-                  workoutSelected
-                    ? "bg-[#1B260D]"
-                    : ""
-                }
+                ${workoutSelected ? "bg-[#1B260D]" : ""}
               `}
             >
               Workouts
             </Link>
 
-
             <Link
               href="/my-plan?tab=today"
-              onClick={() =>
-                setMenuOpen(false)
-              }
+              onClick={() => setMenuOpen(false)}
               style={{
-                color: planSelected
-                  ? "#C7FF00"
-                  : "#B7B8BD",
+                color: planSelected ? "#C7FF00" : "#B7B8BD",
               }}
               className={`
                 mt-1
@@ -427,16 +380,11 @@ export default function Navbar() {
 
                 hover:bg-[#1B260D]
 
-                ${
-                  planSelected
-                    ? "bg-[#1B260D]"
-                    : ""
-                }
+                ${planSelected ? "bg-[#1B260D]" : ""}
               `}
             >
               My Plan
             </Link>
-
 
             <div
               className="
@@ -446,14 +394,11 @@ export default function Navbar() {
               "
             />
 
-
             {/* =:= PLAN =:= */}
 
             <Link
               href="/my-plan?tab=today"
-              onClick={() =>
-                setMenuOpen(false)
-              }
+              onClick={() => setMenuOpen(false)}
               className="
                 flex
                 items-center
@@ -501,14 +446,11 @@ export default function Navbar() {
               </span>
             </Link>
 
-
             {/* =:= SAVED =:= */}
 
             <Link
               href="/my-plan?tab=saved"
-              onClick={() =>
-                setMenuOpen(false)
-              }
+              onClick={() => setMenuOpen(false)}
               className="
                 mt-0.75
 
@@ -560,10 +502,8 @@ export default function Navbar() {
                 {saved.length}
               </span>
             </Link>
-
           </div>
         )}
-
       </div>
     </header>
   );

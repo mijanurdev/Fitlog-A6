@@ -1,11 +1,8 @@
 import { Workout } from "@/types";
 
-const PRIMARY_URL =
-  "https://api.abcz.workers.dev/api/fitlog";
+const PRIMARY_URL = "https://api.abcz.workers.dev/api/fitlog";
 
-const ALTERNATIVE_URL =
-  "https://api.api-store.workers.dev/api/fitlog";
-
+const ALTERNATIVE_URL = "https://api.api-store.workers.dev/api/fitlog";
 
 export async function getAllWorkouts(): Promise<Workout[]> {
   try {
@@ -31,14 +28,9 @@ export async function getAllWorkouts(): Promise<Workout[]> {
   }
 }
 
-
-export async function getWorkoutById(
-  id: string | number
-): Promise<Workout> {
+export async function getWorkoutById(id: string | number): Promise<Workout> {
   try {
-    const response = await fetch(
-      `${PRIMARY_URL}/${id}`
-    );
+    const response = await fetch(`${PRIMARY_URL}/${id}`);
 
     if (!response.ok) {
       throw new Error("Primary API failed");
@@ -48,9 +40,7 @@ export async function getWorkoutById(
 
     return data;
   } catch {
-    const response = await fetch(
-      `${ALTERNATIVE_URL}/${id}`
-    );
+    const response = await fetch(`${ALTERNATIVE_URL}/${id}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch workout");

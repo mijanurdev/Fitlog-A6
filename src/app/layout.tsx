@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 
-import {
-  Inter,
-  Oswald,
-} from "next/font/google";
+import { Inter, Oswald } from "next/font/google";
 
-import {
-  ToastContainer,
-} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
@@ -15,30 +10,23 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-import {
-  PlanProvider,
-} from "@/context/PlanContext";
-
+import { PlanProvider } from "@/context/PlanContext";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
-
 const oswald = Oswald({
   subsets: ["latin"],
   variable: "--font-oswald",
 });
 
-
 export const metadata: Metadata = {
   title: "FitLog",
 
-  description:
-    "A dark, no-nonsense workout library and fitness planner.",
+  description: "A dark, no-nonsense workout library and fitness planner.",
 };
-
 
 export default function RootLayout({
   children,
@@ -47,7 +35,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
       <body
         className={`
           ${inter.variable}
@@ -55,11 +42,9 @@ export default function RootLayout({
         `}
       >
         <PlanProvider>
-
           {/* =:= NAVBAR =:= */}
 
           <Navbar />
-
 
           {/* =:= NAVBAR BOTTOM LIME LINE =:= */}
           <div
@@ -70,18 +55,13 @@ export default function RootLayout({
             "
           />
 
-
           {/* =:= MAIN PAGE CONTENT =:= */}
 
-          <main className="min-h-screen">
-            {children}
-          </main>
-
+          <main className="min-h-screen">{children}</main>
 
           {/* =:= FOOTER =:= */}
 
           <Footer />
-
 
           {/* =:= TOAST =:= */}
 
@@ -96,10 +76,8 @@ export default function RootLayout({
             pauseOnHover
             theme="light"
           />
-
         </PlanProvider>
       </body>
-
     </html>
   );
 }

@@ -3,37 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-import {
-  Suspense,
-  useState,
-} from "react";
+import { Suspense, useState } from "react";
 
-import {
-  Check,
-  ChevronDown,
-  Clock3,
-  Flame,
-  Star,
-  X,
-} from "lucide-react";
+import { Check, ChevronDown, Clock3, Flame, Star, X } from "lucide-react";
 
 import { usePlan } from "@/context/PlanContext";
-import {
-  PlanWorkout,
-  Workout,
-} from "@/types";
+import { PlanWorkout, Workout } from "@/types";
 
-
-type SortType =
-  | "duration"
-  | "calories"
-  | "rating";
-
+type SortType = "duration" | "calories" | "rating";
 
 function MyPlanContent() {
   const router = useRouter();
@@ -54,79 +33,44 @@ function MyPlanContent() {
     metrics,
   } = usePlan();
 
-
   /* =:= ACTIVE TAB =:= */
 
-  const activeTab =
-    searchParams.get("tab") === "saved"
-      ? "saved"
-      : "today";
+  const activeTab = searchParams.get("tab") === "saved" ? "saved" : "today";
 
-
-  const changeTab = (
-    tab: "today" | "saved"
-  ) => {
-    router.replace(
-      `/my-plan?tab=${tab}`,
-      {
-        scroll: false,
-      }
-    );
+  const changeTab = (tab: "today" | "saved") => {
+    router.replace(`/my-plan?tab=${tab}`, {
+      scroll: false,
+    });
   };
-
 
   /* =:= SORT =:= */
 
-  const [sortBy, setSortBy] =
-    useState<SortType>("duration");
+  const [sortBy, setSortBy] = useState<SortType>("duration");
 
+  const currentList: PlanWorkout[] | Workout[] =
+    activeTab === "today" ? plan : saved;
 
-  const currentList:
-    | PlanWorkout[]
-    | Workout[] =
-    activeTab === "today"
-      ? plan
-      : saved;
-
-
-  const sortedList = [
-    ...currentList,
-  ].sort((a, b) => {
+  const sortedList = [...currentList].sort((a, b) => {
     if (sortBy === "duration") {
-      return (
-        a.duration - b.duration
-      );
+      return a.duration - b.duration;
     }
 
     if (sortBy === "calories") {
-      return (
-        b.caloriesBurned -
-        a.caloriesBurned
-      );
+      return b.caloriesBurned - a.caloriesBurned;
     }
 
     if (sortBy === "rating") {
-      return (
-        b.rating - a.rating
-      );
+      return b.rating - a.rating;
     }
 
     return 0;
   });
 
-
   /* =:= CHECK PLAN =:= */
 
-  const isInPlan = (
-    id: number
-  ) => {
-    return plan.some(
-      (item) =>
-        String(item.id) ===
-        String(id)
-    );
+  const isInPlan = (id: number) => {
+    return plan.some((item) => String(item.id) === String(id));
   };
-
 
   return (
     <section
@@ -141,7 +85,6 @@ function MyPlanContent() {
         lg:pt-14.5
       "
     >
-
       {/* =:= TITLE =:= */}
 
       <div>
@@ -162,7 +105,6 @@ function MyPlanContent() {
           MY PLAN
         </h1>
 
-
         <p
           className="
             mt-2.5
@@ -173,11 +115,9 @@ function MyPlanContent() {
             sm:text-[14px]
           "
         >
-          Cap of five lifts for today.
-          Finish them, then load more.
+          Cap of five lifts for today. Finish them, then load more.
         </p>
       </div>
-
 
       {/* =:= METRICS =:= */}
 
@@ -195,7 +135,6 @@ function MyPlanContent() {
           lg:gap-6
         "
       >
-
         <div
           className="
             rounded-2xl
@@ -235,7 +174,6 @@ function MyPlanContent() {
           </p>
         </div>
 
-
         <div
           className="
             rounded-2xl
@@ -249,9 +187,7 @@ function MyPlanContent() {
             py-5.5
           "
         >
-          <p className="text-[13px] text-[#A1A8B5]">
-            Minutes
-          </p>
+          <p className="text-[13px] text-[#A1A8B5]">Minutes</p>
 
           <p
             className="
@@ -270,7 +206,6 @@ function MyPlanContent() {
           </p>
         </div>
 
-
         <div
           className="
             rounded-2xl
@@ -284,9 +219,7 @@ function MyPlanContent() {
             py-5.5
           "
         >
-          <p className="text-[13px] text-[#A1A8B5]">
-            Calories
-          </p>
+          <p className="text-[13px] text-[#A1A8B5]">Calories</p>
 
           <p
             className="
@@ -304,9 +237,7 @@ function MyPlanContent() {
             {metrics.calories}
           </p>
         </div>
-
       </div>
-
 
       {/* =:= TABS + SORT =:= */}
 
@@ -324,7 +255,6 @@ function MyPlanContent() {
           sm:justify-between
         "
       >
-
         {/* =:= TAB CONTAINER =:= */}
         <div
           className="
@@ -343,14 +273,9 @@ function MyPlanContent() {
             p-1
           "
         >
-
           <button
             type="button"
-
-            onClick={() =>
-              changeTab("today")
-            }
-
+            onClick={() => changeTab("today")}
             className={`
               rounded-[7px]
 
@@ -378,14 +303,9 @@ function MyPlanContent() {
             Today&apos;s Plan
           </button>
 
-
           <button
             type="button"
-
-            onClick={() =>
-              changeTab("saved")
-            }
-
+            onClick={() => changeTab("saved")}
             className={`
               rounded-[7px]
 
@@ -412,9 +332,7 @@ function MyPlanContent() {
           >
             Saved
           </button>
-
         </div>
-
 
         {/* =:= SORT =:= */}
         <div
@@ -433,19 +351,10 @@ function MyPlanContent() {
             Sort By
           </span>
 
-
           <div className="relative">
-
             <select
               value={sortBy}
-
-              onChange={(event) =>
-                setSortBy(
-                  event.target
-                    .value as SortType
-                )
-              }
-
+              onChange={(event) => setSortBy(event.target.value as SortType)}
               className="
                 appearance-none
 
@@ -468,23 +377,15 @@ function MyPlanContent() {
                 outline-none
               "
             >
-              <option value="duration">
-                Duration
-              </option>
+              <option value="duration">Duration</option>
 
-              <option value="calories">
-                Calories
-              </option>
+              <option value="calories">Calories</option>
 
-              <option value="rating">
-                Rating
-              </option>
+              <option value="rating">Rating</option>
             </select>
-
 
             <ChevronDown
               size={14}
-
               className="
                 pointer-events-none
 
@@ -497,12 +398,9 @@ function MyPlanContent() {
                 text-white
               "
             />
-
           </div>
         </div>
-
       </div>
-
 
       {/* =:= LOADING =:= */}
 
@@ -516,20 +414,15 @@ function MyPlanContent() {
             justify-center
           "
         >
-          <p className="text-[13px] text-[#9EA1A9]">
-            Loading workouts...
-          </p>
+          <p className="text-[13px] text-[#9EA1A9]">Loading workouts...</p>
         </div>
       )}
 
-
       {/* =:= EMPTY =:= */}
 
-      {isHydrated &&
-        sortedList.length === 0 && (
-
-          <div
-            className="
+      {isHydrated && sortedList.length === 0 && (
+        <div
+          className="
               mt-8
 
               flex
@@ -549,9 +442,9 @@ function MyPlanContent() {
 
               text-center
             "
-          >
-            <h2
-              className="
+        >
+          <h2
+            className="
                 font-display
 
                 text-[24px]
@@ -560,28 +453,24 @@ function MyPlanContent() {
 
                 text-white
               "
-            >
-              NOTHING HERE YET
-            </h2>
+          >
+            NOTHING HERE YET
+          </h2>
 
-
-            <p
-              className="
+          <p
+            className="
                 mt-2.25
 
                 text-[12px]
                 text-[#969AA4]
               "
-            >
-              Browse the library and add a
-              lift to get today moving.
-            </p>
+          >
+            Browse the library and add a lift to get today moving.
+          </p>
 
-
-            <Link
-              href="/"
-
-              className="
+          <Link
+            href="/"
+            className="
                 mt-4.25
 
                 rounded-md
@@ -596,21 +485,17 @@ function MyPlanContent() {
 
                 text-black!
               "
-            >
-              Go to workouts
-            </Link>
-
-          </div>
-        )}
-
+          >
+            Go to workouts
+          </Link>
+        </div>
+      )}
 
       {/* =:= WORKOUT ROWS =:= */}
 
-      {isHydrated &&
-        sortedList.length > 0 && (
-
-          <div
-            className="
+      {isHydrated && sortedList.length > 0 && (
+        <div
+          className="
               mt-8
 
               flex
@@ -618,28 +503,19 @@ function MyPlanContent() {
 
               gap-4
             "
-          >
-            {sortedList.map(
-              (item) => {
+        >
+          {sortedList.map((item) => {
+            const itemDone =
+              activeTab === "today" ? (item as PlanWorkout).isDone : false;
 
-                const itemDone =
-  activeTab === "today"
-    ? (item as PlanWorkout).isDone
-    : false;
+            const alreadyInPlan = isInPlan(item.id);
 
-                const alreadyInPlan =
-                  isInPlan(item.id);
+            const planFull = plan.length >= 5;
 
-
-                const planFull =
-                  plan.length >= 5;
-
-
-                return (
-                  <div
-                    key={item.id}
-
-                    className="
+            return (
+              <div
+                key={item.id}
+                className="
                       rounded-2xl
 
                       border
@@ -650,10 +526,9 @@ function MyPlanContent() {
                       px-4.5
                       py-4.5
                     "
-                  >
-
-                    <div
-                      className="
+              >
+                <div
+                  className="
                         flex
                         flex-col
 
@@ -663,12 +538,11 @@ function MyPlanContent() {
                         md:items-center
                         md:justify-between
                       "
-                    >
+                >
+                  {/* =:= LEFT SIDE =:= */}
 
-                      {/* =:= LEFT SIDE =:= */}
-
-                      <div
-                        className="
+                  <div
+                    className="
                           flex
                           min-w-0
 
@@ -676,11 +550,10 @@ function MyPlanContent() {
 
                           gap-4.5
                         "
-                      >
-
-                        {/* =:= IMAGE =:= */}
-                        <div
-                          className="
+                  >
+                    {/* =:= IMAGE =:= */}
+                    <div
+                      className="
                             relative
 
                             h-24
@@ -694,27 +567,22 @@ function MyPlanContent() {
 
                             bg-[#202228]
                           "
-                        >
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-
-                            fill
-
-                            sizes="150px"
-
-                            className="
+                    >
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        sizes="150px"
+                        className="
                               object-cover
                             "
-                          />
-                        </div>
+                      />
+                    </div>
 
-
-                        {/* =:= DETAILS =:= */}
-                        <div className="min-w-0">
-
-                          <h3
-                            className="
+                    {/* =:= DETAILS =:= */}
+                    <div className="min-w-0">
+                      <h3
+                        className="
                               font-display
 
                               text-[20px]
@@ -724,27 +592,25 @@ function MyPlanContent() {
 
                               text-white
                             "
-                          >
-                            {item.name}
-                          </h3>
+                      >
+                        {item.name}
+                      </h3>
 
-
-                          <p
-                            className="
+                      <p
+                        className="
                               mt-1.5
 
                               text-[12px]
 
                               text-[#A0A5AF]
                             "
-                          >
-                            {item.equipment}
-                          </p>
+                      >
+                        {item.equipment}
+                      </p>
 
-
-                          {/* =:= STATS =:= */}
-                          <div
-                            className="
+                      {/* =:= STATS =:= */}
+                      <div
+                        className="
                               mt-2.75
 
                               flex
@@ -756,69 +622,48 @@ function MyPlanContent() {
                               text-[11px]
                               text-[#E1E2E5]
                             "
-                          >
-
-                            <span
-                              className="
+                      >
+                        <span
+                          className="
                                 flex
                                 items-center
                                 gap-1.25
                               "
-                            >
-                              <Clock3
-                                size={13}
-                                className="text-[#C7FF00]"
-                              />
+                        >
+                          <Clock3 size={13} className="text-[#C7FF00]" />
+                          {item.duration} min
+                        </span>
 
-                              {item.duration} min
-                            </span>
-
-
-                            <span
-                              className="
+                        <span
+                          className="
                                 flex
                                 items-center
                                 gap-1.25
                               "
-                            >
-                              <Flame
-                                size={13}
-                                className="text-[#C7FF00]"
-                              />
+                        >
+                          <Flame size={13} className="text-[#C7FF00]" />
+                          {item.caloriesBurned} kcal
+                        </span>
 
-                              {
-                                item.caloriesBurned
-                              }{" "}
-                              kcal
-                            </span>
-
-
-                            <span
-                              className="
+                        <span
+                          className="
                                 flex
                                 items-center
                                 gap-1.25
                               "
-                            >
-                              <Star
-                                size={13}
-                                className="text-[#C7FF00]"
-                              />
+                        >
+                          <Star size={13} className="text-[#C7FF00]" />
 
-                              {item.rating}
-                            </span>
-
-                          </div>
-
-                        </div>
-
+                          {item.rating}
+                        </span>
                       </div>
+                    </div>
+                  </div>
 
+                  {/* =:= BUTTONS =:= */}
 
-                      {/* =:= BUTTONS =:= */}
-
-                      <div
-                        className="
+                  <div
+                    className="
                           flex
                           flex-wrap
 
@@ -829,13 +674,11 @@ function MyPlanContent() {
                           md:shrink-0
                           md:justify-end
                         "
-                      >
-
-                        {/* =:= VIEW DETAILS =:= */}
-                        <Link
-                          href={`/workout/${item.id}`}
-
-                          className="
+                  >
+                    {/* =:= VIEW DETAILS =:= */}
+                    <Link
+                      href={`/workout/${item.id}`}
+                      className="
                             inline-flex
 
                             h-11
@@ -861,37 +704,27 @@ function MyPlanContent() {
                             hover:border-[#C7FF00]
                             hover:text-[#C7FF00]!
                           "
-                        >
-                          View Details
-                        </Link>
+                    >
+                      View Details
+                    </Link>
 
+                    {/* =:= TODAY'S PLAN BUTTON =:= */}
 
-                        {/* =:= TODAY'S PLAN BUTTON =:= */}
+                    {activeTab === "today" && (
+                      <button
+                        type="button"
+                        disabled={itemDone}
+                        onClick={() => {
+                          if (itemDone) {
+                            return;
+                          }
 
-                        {activeTab === "today" && (
-
-                          <button
-                            type="button"
-
-                            disabled={itemDone}
-
-                            onClick={() => {
-                              if (itemDone) {
-                                return;
-                              }
-
-                              markAsDone(
-                                item.id
-                              );
-                            }}
-
-                            style={{
-                              cursor: itemDone
-                                ? "not-allowed"
-                                : "pointer",
-                            }}
-
-                            className={`
+                          markAsDone(item.id);
+                        }}
+                        style={{
+                          cursor: itemDone ? "not-allowed" : "pointer",
+                        }}
+                        className={`
                               inline-flex
 
                               h-11
@@ -923,52 +756,33 @@ function MyPlanContent() {
                                   `
                               }
                             `}
-                          >
-                            <Check
-                              size={15}
-                              strokeWidth={2}
-                            />
+                      >
+                        <Check size={15} strokeWidth={2} />
 
-                            {itemDone
-                              ? "Done"
-                              : "Mark as Done"}
-                          </button>
+                        {itemDone ? "Done" : "Mark as Done"}
+                      </button>
+                    )}
 
-                        )}
+                    {/* =:= SAVED TAB ADD BUTTON =:= */}
 
+                    {activeTab === "saved" && (
+                      <button
+                        type="button"
+                        disabled={alreadyInPlan || planFull}
+                        onClick={() => {
+                          if (alreadyInPlan || planFull) {
+                            return;
+                          }
 
-                        {/* =:= SAVED TAB ADD BUTTON =:= */}
-
-                        {activeTab === "saved" && (
-
-                          <button
-                            type="button"
-
-                            disabled={
-                              alreadyInPlan ||
-                              planFull
-                            }
-
-                            onClick={() => {
-                              if (
-                                alreadyInPlan ||
-                                planFull
-                              ) {
-                                return;
-                              }
-
-                              addToPlan(item);
-                            }}
-
-                            style={{
-                              cursor:
-                                alreadyInPlan ||
-                                planFull
-                                  ? "not-allowed"
-                                  : "pointer",
-                            }}
-
-                            className={`
+                          addToPlan(item);
+                        }}
+                        style={{
+                          cursor:
+                            alreadyInPlan || planFull
+                              ? "not-allowed"
+                              : "pointer",
+                        }}
+                        className={`
                               inline-flex
 
                               h-11
@@ -988,8 +802,7 @@ function MyPlanContent() {
                               transition-colors
 
                               ${
-                                alreadyInPlan ||
-                                planFull
+                                alreadyInPlan || planFull
                                   ? `
                                     bg-[#2B2E34]
                                     text-[#727783]
@@ -1001,37 +814,26 @@ function MyPlanContent() {
                                   `
                               }
                             `}
-                          >
-                            {alreadyInPlan
-                              ? "Already in Plan"
-                              : planFull
-                              ? "Plan Full"
-                              : "Add to Plan"}
-                          </button>
+                      >
+                        {alreadyInPlan
+                          ? "Already in Plan"
+                          : planFull
+                            ? "Plan Full"
+                            : "Add to Plan"}
+                      </button>
+                    )}
 
-                        )}
-
-
-                        {/* =:= REMOVE =:= */}
-                        <button
-                          type="button"
-
-                          onClick={() => {
-                            if (
-                              activeTab ===
-                              "today"
-                            ) {
-                              removeFromPlan(
-                                item.id
-                              );
-                            } else {
-                              removeFromSaved(
-                                item.id
-                              );
-                            }
-                          }}
-
-                          className="
+                    {/* =:= REMOVE =:= */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (activeTab === "today") {
+                          removeFromPlan(item.id);
+                        } else {
+                          removeFromSaved(item.id);
+                        }
+                      }}
+                      className="
                             flex
 
                             h-9.5
@@ -1050,26 +852,17 @@ function MyPlanContent() {
                             hover:bg-[#292C33]
                             hover:text-white
                           "
-
-                          aria-label="Remove workout"
-                        >
-                          <X
-                            size={17}
-                            strokeWidth={1.8}
-                          />
-                        </button>
-
-                      </div>
-
-                    </div>
-
+                      aria-label="Remove workout"
+                    >
+                      <X size={17} strokeWidth={1.8} />
+                    </button>
                   </div>
-                );
-              }
-            )}
-          </div>
-        )}
-
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 }
@@ -1082,9 +875,7 @@ export default function MyPlanPage() {
           <div className="flex flex-col items-center gap-3">
             <div className="h-7.5 w-7.5 animate-spin rounded-full border-[3px] border-[#34363D] border-t-[#C7FF00]" />
 
-            <p className="text-[13px] text-[#9EA1A9]">
-              Loading workouts...
-            </p>
+            <p className="text-[13px] text-[#9EA1A9]">Loading workouts...</p>
           </div>
         </div>
       }

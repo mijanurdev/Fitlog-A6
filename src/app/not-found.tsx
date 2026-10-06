@@ -70,8 +70,8 @@ export default function NotFound() {
           sm:text-[14px]
         "
       >
-        The page you are looking for does not exist.
-        Head back to the workout library and keep training.
+        The page you are looking for does not exist. Head back to the workout
+        library and keep training.
       </p>
 
       {/* =:= BUTTON =:= */}

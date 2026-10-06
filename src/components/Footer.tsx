@@ -11,7 +11,6 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-black">
-
       {/* =:= SOFT LIME SEPARATOR =:= */}
       <div className="h-px w-full bg-[rgba(199,255,0,0.22)]" />
 
@@ -47,7 +46,6 @@ export default function Footer() {
           }
         `}
       >
-
         {/* =:= FITLOG BRAND =:= */}
 
         <Link
@@ -91,7 +89,6 @@ export default function Footer() {
           </span>
         </Link>
 
-
         {/* =:= COPYRIGHT =:= */}
 
         <p
@@ -117,9 +114,7 @@ export default function Footer() {
         >
           © 2026 FitLog — Workout Library. Train hard, log honest.
         </p>
-
       </div>
-
     </footer>
   );
 }

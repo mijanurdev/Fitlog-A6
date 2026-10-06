@@ -1,18 +1,10 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 
-import {
-  PlanWorkout,
-  Workout,
-} from "@/types";
+import { PlanWorkout, Workout } from "@/types";
 
 interface PlanContextType {
   plan: PlanWorkout[];
@@ -34,26 +26,16 @@ interface PlanContextType {
   };
 }
 
-const PlanContext =
-  createContext<PlanContextType | null>(null);
+const PlanContext = createContext<PlanContextType | null>(null);
 
-export function PlanProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-
+export function PlanProvider({ children }: { children: React.ReactNode }) {
   /* =:= STATE =:= */
 
-  const [plan, setPlan] =
-    useState<PlanWorkout[]>([]);
+  const [plan, setPlan] = useState<PlanWorkout[]>([]);
 
-  const [saved, setSaved] =
-    useState<Workout[]>([]);
+  const [saved, setSaved] = useState<Workout[]>([]);
 
-  const [isHydrated, setIsHydrated] =
-    useState(false);
-
+  const [isHydrated, setIsHydrated] = useState(false);
 
   /* =:= CLIENT READY =:= */
 
@@ -61,27 +43,17 @@ export function PlanProvider({
     setIsHydrated(true);
   }, []);
 
-
   /* =:= ADD TO PLAN =:= */
 
-  const addToPlan = (
-    workout: Workout
-  ) => {
-    const exists =
-      plan.some(
-        (item) =>
-          String(item.id) ===
-          String(workout.id)
-      );
+  const addToPlan = (workout: Workout) => {
+    const exists = plan.some((item) => String(item.id) === String(workout.id));
 
     if (exists) {
       return;
     }
 
     if (plan.length >= 5) {
-      toast.error(
-        "Today's plan is full"
-      );
+      toast.error("Today's plan is full");
 
       return;
     }
@@ -94,119 +66,69 @@ export function PlanProvider({
       },
     ]);
 
-    toast.success(
-      "Added to today's plan"
-    );
+    toast.success("Added to today's plan");
   };
-
 
   /* =:= ADD TO SAVED =:= */
 
-  const addToSaved = (
-    workout: Workout
-  ) => {
-    const exists =
-      saved.some(
-        (item) =>
-          String(item.id) ===
-          String(workout.id)
-      );
+  const addToSaved = (workout: Workout) => {
+    const exists = saved.some((item) => String(item.id) === String(workout.id));
 
     if (exists) {
       return;
     }
 
-    setSaved((previousSaved) => [
-      ...previousSaved,
-      workout,
-    ]);
+    setSaved((previousSaved) => [...previousSaved, workout]);
 
-    toast.success(
-      "Saved for later"
-    );
+    toast.success("Saved for later");
   };
-
 
   /* =:= REMOVE FROM PLAN =:= */
 
-  const removeFromPlan = (
-    id: number
-  ) => {
+  const removeFromPlan = (id: number) => {
     setPlan((previousPlan) =>
-      previousPlan.filter(
-        (item) =>
-          String(item.id) !==
-          String(id)
-      )
+      previousPlan.filter((item) => String(item.id) !== String(id)),
     );
 
-    toast.success(
-      "Removed from plan"
-    );
+    toast.success("Removed from plan");
   };
-
 
   /* =:= REMOVE FROM SAVED =:= */
 
-  const removeFromSaved = (
-    id: number
-  ) => {
+  const removeFromSaved = (id: number) => {
     setSaved((previousSaved) =>
-      previousSaved.filter(
-        (item) =>
-          String(item.id) !==
-          String(id)
-      )
+      previousSaved.filter((item) => String(item.id) !== String(id)),
     );
 
-    toast.success(
-      "Removed from saved"
-    );
+    toast.success("Removed from saved");
   };
-
 
   /* =:= MARK AS DONE =:= */
 
-  const markAsDone = (
-    id: number
-  ) => {
+  const markAsDone = (id: number) => {
     setPlan((previousPlan) =>
       previousPlan.map((item) =>
-        String(item.id) ===
-        String(id)
+        String(item.id) === String(id)
           ? {
               ...item,
               isDone: true,
             }
-          : item
-      )
+          : item,
+      ),
     );
 
-    toast.success(
-      "Workout completed"
-    );
+    toast.success("Workout completed");
   };
-
 
   /* =:= METRICS =:= */
 
   const metrics = {
     exercises: plan.length,
 
-    minutes: plan.reduce(
-      (total, item) =>
-        total + item.duration,
-      0
-    ),
+    minutes: plan.reduce((total, item) => total + item.duration, 0),
 
-    calories: plan.reduce(
-      (total, item) =>
-        total +
-        item.caloriesBurned,
-      0
-    ),
+    calories: plan.reduce((total, item) => total + item.caloriesBurned, 0),
   };
-
 
   /* =:= CONTEXT VALUE =:= */
 
@@ -226,25 +148,14 @@ export function PlanProvider({
     metrics,
   };
 
-
-  return (
-    <PlanContext.Provider
-      value={value}
-    >
-      {children}
-    </PlanContext.Provider>
-  );
+  return <PlanContext.Provider value={value}>{children}</PlanContext.Provider>;
 }
 
-
 export function usePlan() {
-  const context =
-    useContext(PlanContext);
+  const context = useContext(PlanContext);
 
   if (!context) {
-    throw new Error(
-      "usePlan must be used inside PlanProvider"
-    );
+    throw new Error("usePlan must be used inside PlanProvider");
   }
 
   return context;

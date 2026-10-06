@@ -1,11 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  Clock3,
-  Flame,
-  Star,
-} from "lucide-react";
+import { Clock3, Flame, Star } from "lucide-react";
 
 import { Workout } from "@/types";
 
@@ -13,9 +9,7 @@ interface WorkoutCardProps {
   workout: Workout;
 }
 
-export default function WorkoutCard({
-  workout,
-}: WorkoutCardProps) {
+export default function WorkoutCard({ workout }: WorkoutCardProps) {
   return (
     <Link
       href={`/workout/${workout.id}`}
@@ -39,7 +33,6 @@ export default function WorkoutCard({
         hover:border-[#34373E]
       "
     >
-
       {/* =:= IMAGE =:= */}
 
       <div
@@ -71,11 +64,9 @@ export default function WorkoutCard({
         />
       </div>
 
-
       {/* =:= CONTENT =:= */}
 
       <div className="p-4.5">
-
         {/* =:= TAGS =:= */}
 
         <div
@@ -87,11 +78,10 @@ export default function WorkoutCard({
             gap-1.5
           "
         >
-          {workout.muscleGroups.map(
-            (muscle) => (
-              <span
-                key={muscle}
-                className="
+          {workout.muscleGroups.map((muscle) => (
+            <span
+              key={muscle}
+              className="
                   rounded-full
 
                   bg-[#C7FF00]
@@ -106,13 +96,11 @@ export default function WorkoutCard({
 
                   text-[#08090B]
                 "
-              >
-                {muscle}
-              </span>
-            )
-          )}
+            >
+              {muscle}
+            </span>
+          ))}
         </div>
-
 
         {/* =:= NAME =:= */}
 
@@ -134,7 +122,6 @@ export default function WorkoutCard({
           {workout.name}
         </h3>
 
-
         {/* =:= EQUIPMENT =:= */}
 
         <p
@@ -150,7 +137,6 @@ export default function WorkoutCard({
           {workout.equipment}
         </p>
 
-
         {/* =:= DIVIDER =:= */}
 
         <div
@@ -163,7 +149,6 @@ export default function WorkoutCard({
             bg-[#25272D]
           "
         />
-
 
         {/* =:= STATS =:= */}
 
@@ -179,49 +164,25 @@ export default function WorkoutCard({
             text-[#A6A8AF]
           "
         >
-
           <div className="flex items-center gap-1.5">
-            <Clock3
-              size={14}
-              strokeWidth={1.8}
-              className="text-[#C7FF00]"
-            />
+            <Clock3 size={14} strokeWidth={1.8} className="text-[#C7FF00]" />
 
-            <span>
-              {workout.duration} min
-            </span>
+            <span>{workout.duration} min</span>
           </div>
 
-
           <div className="flex items-center gap-1.5">
-            <Flame
-              size={14}
-              strokeWidth={1.8}
-              className="text-[#C7FF00]"
-            />
+            <Flame size={14} strokeWidth={1.8} className="text-[#C7FF00]" />
 
-            <span>
-              {workout.caloriesBurned} kcal
-            </span>
+            <span>{workout.caloriesBurned} kcal</span>
           </div>
 
-
           <div className="flex items-center gap-1.5">
-            <Star
-              size={14}
-              strokeWidth={1.8}
-              className="text-[#C7FF00]"
-            />
+            <Star size={14} strokeWidth={1.8} className="text-[#C7FF00]" />
 
-            <span>
-              {workout.rating}
-            </span>
+            <span>{workout.rating}</span>
           </div>
-
         </div>
-
       </div>
-
     </Link>
   );
 }

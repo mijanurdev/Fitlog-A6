@@ -1,38 +1,27 @@
 "use client";
 
-import {
-  useEffect,
-  useState,
-} from "react";
-
-import { Workout } from "@/types";
-import { getAllWorkouts } from "@/utils/api";
+import { useEffect, useState } from "react";
 
 import WorkoutCard from "@/components/WorkoutCard";
+import { getAllWorkouts } from "@/utils/api";
+import { Workout } from "@/types";
 
 export default function LibrarySection() {
-  const [workouts, setWorkouts] =
-    useState<Workout[]>([]);
-
-  const [loading, setLoading] =
-    useState(true);
-
-  const [error, setError] =
-    useState(false);
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function loadWorkouts() {
       try {
-        const data =
-          await getAllWorkouts();
+        setLoading(true);
+        setError(false);
+
+        const data = await getAllWorkouts();
 
         setWorkouts(data);
       } catch (error) {
-        console.error(
-          "Workout loading error:",
-          error
-        );
-
+        console.error("Workout loading error:", error);
         setError(true);
       } finally {
         setLoading(false);
@@ -45,149 +34,39 @@ export default function LibrarySection() {
   return (
     <section
       id="library"
-      className="
-        site-container
-        scroll-mt-27.5
-
-        pb-18.75
-        pt-14
-
-        sm:pt-15
-
-        lg:pb-21.25
-        lg:pt-16.5
-      "
+      className="site-container scroll-mt-[110px] pb-[75px] pt-[56px] sm:pt-[60px] lg:pb-[85px] lg:pt-[66px]"
     >
-
-      {/* =:= SECTION HEADING =:= */}
-
-      <div className="mb-7
-
-        <h2
-          className="
-            font-display
-
-            text-[31px]
-            font-bold
-            uppercase
-            leading-none
-
-            text-white
-
-            sm:text-[33px]
-
-            lg:text-[35px]
-          "
-        >
+      <div className="mb-[28px]">
+        <h2 className="font-display text-[31px] font-bold uppercase leading-none text-white sm:text-[33px] lg:text-[35px]">
           THE LIBRARY
         </h2>
 
-
-        <p
-          className="
-            mt-2.5
-
-            text-[13px]
-            font-normal
-            leading-[1.6]
-
-            text-[#A2A4AB]
-
-            sm:text-[14px]
-          "
-        >
+        <p className="mt-[9px] text-[13px] leading-[1.6] text-[#979AA2] sm:text-[14px]">
           Twelve lifts covering every major muscle group.
         </p>
-
       </div>
 
-
-      {/* =:= LOADING =:= */}
-
       {loading && (
-        <div
-          className="
-            flex
-            min-h-70
-            flex-col
-            items-center
-            justify-center
-            gap-3
-          "
-        >
-          <div
-            className="
-              h-8
-              w-8
+        <div className="flex min-h-[300px] flex-col items-center justify-center gap-[12px]">
+          <div className="h-[32px] w-[32px] animate-spin rounded-full border-[3px] border-[#303238] border-t-[#C7FF00]" />
 
-              animate-spin
-
-              rounded-full
-
-              border-[3px]
-              border-[#303238]
-              border-t-[#C7FF00]
-            "
-          />
-
-          <p className="text-[13px] text-[#A2A4AB]">
-            Loading workouts...
-          </p>
+          <p className="text-[13px] text-[#9EA1A9]">Loading workouts...</p>
         </div>
       )}
-
-
-      {/* =:= ERROR =:= */}
 
       {!loading && error && (
-        <div
-          className="
-            flex
-            min-h-57.5
-            items-center
-            justify-center
-
-            rounded-[10px]
-
-            border
-            border-[#202228]
-
-            bg-[#15161B]
-
-            text-[14px]
-            text-[#A7A9B0]
-          "
-        >
-          Unable to load workouts.
+        <div className="flex min-h-[250px] items-center justify-center">
+          <p className="text-[13px] text-[#A5A7AE]">Failed to load workouts.</p>
         </div>
       )}
 
-
-      {/* =:= WORKOUT GRID =:= */}
-
       {!loading && !error && (
-        <div
-          className="
-            grid
-            grid-cols-1
-            gap-4.5
-
-            sm:grid-cols-2
-            sm:gap-5
-
-            lg:grid-cols-3
-            lg:gap-5.5
-          "
-        >
+        <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 sm:gap-[20px] lg:grid-cols-3 lg:gap-[22px]">
           {workouts.map((workout) => (
-            <WorkoutCard
-              key={workout.id}
-              workout={workout}
-            />
+            <WorkoutCard key={workout.id} workout={workout} />
           ))}
         </div>
       )}
-
     </section>
   );
 }

@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
+/* =:= FITLOG COLORS =:= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0c0d10;
+  --surface: #16171c;
+  --surface-soft: #15161a;
+
+  --accent: #c7ff00;
+
+  --border: #202228;
+
+  --text-main: #ffffff;
+  --text-muted: #a7a8ae;
+  --text-soft: #777a82;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =:= GLOBAL =:= */
+
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
+  padding: 0;
+
+  min-height: 100vh;
+
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-main);
+
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+/* =:= DISPLAY FONT =:= */
+
+.font-display {
+  font-family: var(--font-oswald), Arial, sans-serif;
+}
+
+/* =:= MAIN CONTAINER =:= */
+
+.site-container {
+  width: calc(100% - 32px);
+  max-width: 1280px;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .site-container {
+    width: calc(100% - 48px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-container {
+    width: calc(100% - 64px);
+  }
+}
+
+/* =:= BASIC ELEMENTS =:= */
+
+button,
+a {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* =:= TEXT SELECTION =:= */
+
+::selection {
+  background: var(--accent);
+  color: #0c0d10;
 }

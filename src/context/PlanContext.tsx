@@ -7,8 +7,12 @@ import {
   useState,
 } from "react";
 
-import toast from "react-hot-toast";
-import { PlanWorkout, Workout } from "@/types";
+import { toast } from "react-toastify";
+
+import {
+  PlanWorkout,
+  Workout,
+} from "@/types";
 
 interface PlanContextType {
   plan: PlanWorkout[];
@@ -29,31 +33,52 @@ interface PlanContextType {
   };
 }
 
-const PlanContext = createContext<PlanContextType | null>(null);
+const PlanContext =
+  createContext<PlanContextType | null>(
+    null
+  );
 
 export function PlanProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [plan, setPlan] = useState<PlanWorkout[]>([]);
-  const [saved, setSaved] = useState<Workout[]>([]);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [plan, setPlan] =
+    useState<PlanWorkout[]>([]);
+
+  const [saved, setSaved] =
+    useState<Workout[]>([]);
+
+  const [isHydrated, setIsHydrated] =
+    useState(false);
+
 
   useEffect(() => {
-    const storedPlan = localStorage.getItem("fitlog-plan");
-    const storedSaved = localStorage.getItem("fitlog-saved");
+    const storedPlan =
+      localStorage.getItem(
+        "fitlog-plan"
+      );
+
+    const storedSaved =
+      localStorage.getItem(
+        "fitlog-saved"
+      );
 
     if (storedPlan) {
-      setPlan(JSON.parse(storedPlan));
+      setPlan(
+        JSON.parse(storedPlan)
+      );
     }
 
     if (storedSaved) {
-      setSaved(JSON.parse(storedSaved));
+      setSaved(
+        JSON.parse(storedSaved)
+      );
     }
 
     setIsHydrated(true);
   }, []);
+
 
   useEffect(() => {
     if (isHydrated) {
@@ -64,6 +89,7 @@ export function PlanProvider({
     }
   }, [plan, isHydrated]);
 
+
   useEffect(() => {
     if (isHydrated) {
       localStorage.setItem(
@@ -73,76 +99,108 @@ export function PlanProvider({
     }
   }, [saved, isHydrated]);
 
-  const addToPlan = (workout: Workout) => {
-    const alreadyAdded = plan.some(
-      (item) => item.id === workout.id
+
+const addToPlan = (
+  workout: Workout
+) => {
+  const exists =
+    plan.some(
+      (item) =>
+        String(item.id) ===
+        String(workout.id)
     );
 
-    if (alreadyAdded) {
-      toast.error("Already in today's plan!");
-      return;
-    }
+  if (exists) {
+    return;
+  }
 
-    if (plan.length >= 5) {
-      toast.error(
-        "Today's plan is full! Max 5 workouts."
-      );
-      return;
-    }
-
-    setPlan((previousPlan) => [
-      ...previousPlan,
-      {
-        ...workout,
-        isDone: false,
-      },
-    ]);
-
-    toast.success("Added to today's plan!");
-  };
-
-  const addToSaved = (workout: Workout) => {
-    const alreadySaved = saved.some(
-      (item) => item.id === workout.id
+  if (plan.length >= 5) {
+    toast.error(
+      "Today's plan is full"
     );
 
-    if (alreadySaved) {
-      toast.error("Already saved!");
-      return;
-    }
+    return;
+  }
 
-    setSaved((previousSaved) => [
-      ...previousSaved,
-      workout,
-    ]);
+  setPlan((previousPlan) => [
+    ...previousPlan,
+    {
+      ...workout,
+      isDone: false,
+    },
+  ]);
 
-    toast.success("Saved for later!");
-  };
+  toast.success(
+    "Added to today's plan"
+  );
+};
 
-  const removeFromPlan = (id: number) => {
+
+const addToSaved = (
+  workout: Workout
+) => {
+  const exists =
+    saved.some(
+      (item) =>
+        String(item.id) ===
+        String(workout.id)
+    );
+
+  if (exists) {
+    return;
+  }
+
+  setSaved((previousSaved) => [
+    ...previousSaved,
+    workout,
+  ]);
+
+  toast.success(
+    "Saved for later"
+  );
+};
+
+  const removeFromPlan = (
+    id: number
+  ) => {
     setPlan((previousPlan) =>
       previousPlan.filter(
-        (item) => item.id !== id
+        (item) =>
+          String(item.id) !==
+          String(id)
       )
     );
 
-    toast.success("Removed from plan");
+    toast.success(
+      "Removed from plan"
+    );
   };
 
-  const removeFromSaved = (id: number) => {
+
+  const removeFromSaved = (
+    id: number
+  ) => {
     setSaved((previousSaved) =>
       previousSaved.filter(
-        (item) => item.id !== id
+        (item) =>
+          String(item.id) !==
+          String(id)
       )
     );
 
-    toast.success("Removed from saved");
+    toast.success(
+      "Removed from saved"
+    );
   };
 
-  const markAsDone = (id: number) => {
+
+  const markAsDone = (
+    id: number
+  ) => {
     setPlan((previousPlan) =>
       previousPlan.map((item) =>
-        item.id === id
+        String(item.id) ===
+        String(id)
           ? {
               ...item,
               isDone: true,
@@ -151,8 +209,11 @@ export function PlanProvider({
       )
     );
 
-    toast.success("Workout completed!");
+    toast.success(
+      "Workout completed"
+    );
   };
+
 
   const metrics = {
     exercises: plan.length,
@@ -165,10 +226,12 @@ export function PlanProvider({
 
     calories: plan.reduce(
       (total, item) =>
-        total + item.caloriesBurned,
+        total +
+        item.caloriesBurned,
       0
     ),
   };
+
 
   const value: PlanContextType = {
     plan,
@@ -181,15 +244,20 @@ export function PlanProvider({
     metrics,
   };
 
+
   return (
-    <PlanContext.Provider value={value}>
+    <PlanContext.Provider
+      value={value}
+    >
       {children}
     </PlanContext.Provider>
   );
 }
 
+
 export function usePlan() {
-  const context = useContext(PlanContext);
+  const context =
+    useContext(PlanContext);
 
   if (!context) {
     throw new Error(

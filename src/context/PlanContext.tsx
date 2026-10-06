@@ -17,6 +17,7 @@ import {
 interface PlanContextType {
   plan: PlanWorkout[];
   saved: Workout[];
+  isHydrated: boolean;
 
   addToPlan: (workout: Workout) => void;
   addToSaved: (workout: Workout) => void;
@@ -34,15 +35,16 @@ interface PlanContextType {
 }
 
 const PlanContext =
-  createContext<PlanContextType | null>(
-    null
-  );
+  createContext<PlanContextType | null>(null);
 
 export function PlanProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
+  /* =:= STATE =:= */
+
   const [plan, setPlan] =
     useState<PlanWorkout[]>([]);
 
@@ -53,112 +55,79 @@ export function PlanProvider({
     useState(false);
 
 
+  /* =:= CLIENT READY =:= */
+
   useEffect(() => {
-    const storedPlan =
-      localStorage.getItem(
-        "fitlog-plan"
-      );
-
-    const storedSaved =
-      localStorage.getItem(
-        "fitlog-saved"
-      );
-
-    if (storedPlan) {
-      setPlan(
-        JSON.parse(storedPlan)
-      );
-    }
-
-    if (storedSaved) {
-      setSaved(
-        JSON.parse(storedSaved)
-      );
-    }
-
     setIsHydrated(true);
   }, []);
 
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem(
-        "fitlog-plan",
-        JSON.stringify(plan)
+  /* =:= ADD TO PLAN =:= */
+
+  const addToPlan = (
+    workout: Workout
+  ) => {
+    const exists =
+      plan.some(
+        (item) =>
+          String(item.id) ===
+          String(workout.id)
       );
+
+    if (exists) {
+      return;
     }
-  }, [plan, isHydrated]);
 
-
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem(
-        "fitlog-saved",
-        JSON.stringify(saved)
+    if (plan.length >= 5) {
+      toast.error(
+        "Today's plan is full"
       );
+
+      return;
     }
-  }, [saved, isHydrated]);
 
+    setPlan((previousPlan) => [
+      ...previousPlan,
+      {
+        ...workout,
+        isDone: false,
+      },
+    ]);
 
-const addToPlan = (
-  workout: Workout
-) => {
-  const exists =
-    plan.some(
-      (item) =>
-        String(item.id) ===
-        String(workout.id)
+    toast.success(
+      "Added to today's plan"
     );
+  };
 
-  if (exists) {
-    return;
-  }
 
-  if (plan.length >= 5) {
-    toast.error(
-      "Today's plan is full"
+  /* =:= ADD TO SAVED =:= */
+
+  const addToSaved = (
+    workout: Workout
+  ) => {
+    const exists =
+      saved.some(
+        (item) =>
+          String(item.id) ===
+          String(workout.id)
+      );
+
+    if (exists) {
+      return;
+    }
+
+    setSaved((previousSaved) => [
+      ...previousSaved,
+      workout,
+    ]);
+
+    toast.success(
+      "Saved for later"
     );
-
-    return;
-  }
-
-  setPlan((previousPlan) => [
-    ...previousPlan,
-    {
-      ...workout,
-      isDone: false,
-    },
-  ]);
-
-  toast.success(
-    "Added to today's plan"
-  );
-};
+  };
 
 
-const addToSaved = (
-  workout: Workout
-) => {
-  const exists =
-    saved.some(
-      (item) =>
-        String(item.id) ===
-        String(workout.id)
-    );
-
-  if (exists) {
-    return;
-  }
-
-  setSaved((previousSaved) => [
-    ...previousSaved,
-    workout,
-  ]);
-
-  toast.success(
-    "Saved for later"
-  );
-};
+  /* =:= REMOVE FROM PLAN =:= */
 
   const removeFromPlan = (
     id: number
@@ -177,6 +146,8 @@ const addToSaved = (
   };
 
 
+  /* =:= REMOVE FROM SAVED =:= */
+
   const removeFromSaved = (
     id: number
   ) => {
@@ -193,6 +164,8 @@ const addToSaved = (
     );
   };
 
+
+  /* =:= MARK AS DONE =:= */
 
   const markAsDone = (
     id: number
@@ -215,6 +188,8 @@ const addToSaved = (
   };
 
 
+  /* =:= METRICS =:= */
+
   const metrics = {
     exercises: plan.length,
 
@@ -233,14 +208,21 @@ const addToSaved = (
   };
 
 
+  /* =:= CONTEXT VALUE =:= */
+
   const value: PlanContextType = {
     plan,
     saved,
+    isHydrated,
+
     addToPlan,
     addToSaved,
+
     removeFromPlan,
     removeFromSaved,
+
     markAsDone,
+
     metrics,
   };
 

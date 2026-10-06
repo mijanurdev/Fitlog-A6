@@ -20,7 +20,8 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] =
     useState(false);
 
-  // =:= NAVIGATION STATE =:=
+  /* =:= ACTIVE MENU =:= */
+
   const workoutSelected =
     pathname.startsWith("/workout") ||
     (pathname === "/" &&
@@ -44,6 +45,7 @@ export default function Navbar() {
       <div className="site-container relative">
 
         {/* =:= MAIN NAVBAR =:= */}
+
         <div
           className="
             flex
@@ -56,6 +58,7 @@ export default function Navbar() {
         >
 
           {/* =:= LOGO =:= */}
+
           <Link
             href="/"
             onClick={() => {
@@ -102,7 +105,8 @@ export default function Navbar() {
           </Link>
 
 
-          {/* =:= DESKTOP MENU =:= */}
+          {/* =:= DESKTOP CENTER MENU =:= */}
+
           <nav
             className="
               absolute
@@ -152,7 +156,7 @@ export default function Navbar() {
 
 
             <Link
-              href="/my-plan"
+              href="/my-plan?tab=today"
               style={{
                 color: planSelected
                   ? "#C7FF00"
@@ -185,7 +189,8 @@ export default function Navbar() {
           </nav>
 
 
-          {/* =:= DESKTOP COUNTERS =:= */}
+          {/* =:= DESKTOP PLAN + SAVED =:= */}
+
           <div
             className="
               hidden
@@ -197,10 +202,20 @@ export default function Navbar() {
           >
 
             <Link
-              href="/my-plan"
-              className="flex items-center gap-2.25
+              href="/my-plan?tab=today"
+              className="
+                flex
+                items-center
+                gap-2.25
+              "
             >
-              <span className="text-[13px] font-medium text-[#B8BAC0]">
+              <span
+                className="
+                  text-[13px]
+                  font-medium
+                  text-[#B8BAC0]
+                "
+              >
                 Plan
               </span>
 
@@ -229,10 +244,20 @@ export default function Navbar() {
 
 
             <Link
-              href="/my-plan"
-              className="flex items-center gap-2.25"
+              href="/my-plan?tab=saved"
+              className="
+                flex
+                items-center
+                gap-2.25
+              "
             >
-              <span className="text-[13px] font-medium text-[#B8BAC0]">
+              <span
+                className="
+                  text-[13px]
+                  font-medium
+                  text-[#B8BAC0]
+                "
+              >
                 Saved
               </span>
 
@@ -265,7 +290,8 @@ export default function Navbar() {
           </div>
 
 
-          {/* =:= MOBILE + TABLET HAMBURGER =:= */}
+          {/* =:= TABLET + MOBILE HAMBURGER =:= */}
+
           <button
             type="button"
             onClick={() =>
@@ -290,6 +316,7 @@ export default function Navbar() {
               lg:hidden
             "
             aria-label="Menu"
+            aria-expanded={menuOpen}
           >
             <Image
               src="/assets/hamburger.png"
@@ -307,7 +334,8 @@ export default function Navbar() {
         </div>
 
 
-        {/* =:= MOBILE + TABLET RIGHT MENU =:= */}
+        {/* =:= MOBILE + TABLET RIGHT DROPDOWN =:= */}
+
         {menuOpen && (
           <div
             className="
@@ -346,6 +374,7 @@ export default function Navbar() {
               }}
               className={`
                 block
+
                 rounded-[7px]
 
                 px-3.5
@@ -353,6 +382,9 @@ export default function Navbar() {
 
                 text-[14px]
                 font-medium
+
+                transition-colors
+                duration-200
 
                 hover:bg-[#1B260D]
 
@@ -368,7 +400,7 @@ export default function Navbar() {
 
 
             <Link
-              href="/my-plan"
+              href="/my-plan?tab=today"
               onClick={() =>
                 setMenuOpen(false)
               }
@@ -381,6 +413,7 @@ export default function Navbar() {
                 mt-1
 
                 block
+
                 rounded-[7px]
 
                 px-3.5
@@ -388,6 +421,9 @@ export default function Navbar() {
 
                 text-[14px]
                 font-medium
+
+                transition-colors
+                duration-200
 
                 hover:bg-[#1B260D]
 
@@ -411,8 +447,10 @@ export default function Navbar() {
             />
 
 
+            {/* =:= PLAN =:= */}
+
             <Link
-              href="/my-plan"
+              href="/my-plan?tab=today"
               onClick={() =>
                 setMenuOpen(false)
               }
@@ -426,10 +464,17 @@ export default function Navbar() {
                 px-3.5
                 py-2.25
 
+                transition-colors
+
                 hover:bg-[#181A1F]
               "
             >
-              <span className="text-[13px] text-[#B8BAC0]">
+              <span
+                className="
+                  text-[13px]
+                  text-[#B8BAC0]
+                "
+              >
                 Plan
               </span>
 
@@ -457,8 +502,10 @@ export default function Navbar() {
             </Link>
 
 
+            {/* =:= SAVED =:= */}
+
             <Link
-              href="/my-plan"
+              href="/my-plan?tab=saved"
               onClick={() =>
                 setMenuOpen(false)
               }
@@ -474,10 +521,17 @@ export default function Navbar() {
                 px-3.5
                 py-2.25
 
+                transition-colors
+
                 hover:bg-[#181A1F]
               "
             >
-              <span className="text-[13px] text-[#B8BAC0]">
+              <span
+                className="
+                  text-[13px]
+                  text-[#B8BAC0]
+                "
+              >
                 Saved
               </span>
 

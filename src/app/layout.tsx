@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 import {
   PlanProvider,
@@ -53,13 +54,14 @@ export default function RootLayout({
           ${oswald.variable}
         `}
       >
-
         <PlanProvider>
+
+          {/* =:= NAVBAR =:= */}
 
           <Navbar />
 
 
-          {/* =:= SOFT LIME LINE =:= */}
+          {/* =:= NAVBAR BOTTOM LIME LINE =:= */}
           <div
             className="
               h-px
@@ -69,12 +71,20 @@ export default function RootLayout({
           />
 
 
+          {/* =:= MAIN PAGE CONTENT =:= */}
+
           <main className="min-h-screen">
             {children}
           </main>
 
 
-          {/* =:= TOASTIFY =:= */}
+          {/* =:= FOOTER =:= */}
+
+          <Footer />
+
+
+          {/* =:= TOAST =:= */}
+
           <ToastContainer
             position="top-right"
             autoClose={2500}
@@ -88,7 +98,6 @@ export default function RootLayout({
           />
 
         </PlanProvider>
-
       </body>
 
     </html>
